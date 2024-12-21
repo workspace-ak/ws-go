@@ -1,4 +1,4 @@
-package main
+package helloworld
 
 import (
 	"fmt"
@@ -15,24 +15,24 @@ const (
 
 // empty values will be replaced with defaults
 type Parameters struct {
-	name string `default:"World"`
-	l    string `default:"english"`
+	Name string `default:"World"`
+	Lang string `default:"english"`
 }
 
 func Hello(prm Parameters) string {
 	typ := reflect.TypeOf(prm)
-	if prm.name == "" {
-		f, _ := typ.FieldByName("name")
-		prm.name = f.Tag.Get("default")
+	if prm.Name == "" {
+		f, _ := typ.FieldByName("Name")
+		prm.Name = f.Tag.Get("default")
 	}
-	if prm.l == "" {
-		f, _ := typ.FieldByName("l")
-		prm.l = f.Tag.Get("default")
+	if prm.Lang == "" {
+		f, _ := typ.FieldByName("Lang")
+		prm.Lang = f.Tag.Get("default")
 	}
 
 	var prefix greet
 
-	switch prm.l {
+	switch prm.Lang {
 	case "hindi":
 		prefix = hindiGreetPrefix
 	case "french":
@@ -40,10 +40,5 @@ func Hello(prm Parameters) string {
 	default:
 		prefix = engGreetPrefix
 	}
-	return fmt.Sprintf("%s, %s", prefix, prm.name)
-}
-
-func main() {
-	param := Parameters{"", ""}
-	fmt.Println(Hello(param))
+	return fmt.Sprintf("%s, %s", prefix, prm.Name)
 }
