@@ -29,6 +29,10 @@ func TestArea(t *testing.T) {
 			shape: Circle{10},
 			want:  314.1592653589793,
 		},
+		"triangle": {
+			shape: Triangle{3, 4, 5},
+			want:  6.0,
+		},
 	}
 	for name, test := range areaTests {
 		t.Run(name, func(t *testing.T) {

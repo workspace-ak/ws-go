@@ -37,3 +37,15 @@ type Circle struct {
 func (c Circle) Area() float64 {
 	return math.Pi * c.radius * c.radius
 }
+
+// Scalene triangle
+type Triangle struct {
+	A float64
+	B float64
+	C float64
+}
+
+func (t Triangle) Area() float64 {
+	s := (t.A + t.B + t.C) / 2
+	return math.Sqrt(s * (s - t.A) * (s - t.B) * (s - t.C))
+}
