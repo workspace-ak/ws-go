@@ -24,16 +24,44 @@ func ExampleSum() {
 }
 
 func TestSumAll(t *testing.T) {
-	want := SumAll([]int{1, 2, 3}, []int{4, 5})
-	expect := []int{6, 9}
-	if !reflect.DeepEqual(expect, want) {
-		t.Errorf("wanted %v, but got %v", expect, want)
+	got := SumAll([]int{1, 2, 3}, []int{4, 5})
+	want := []int{6, 9}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %v, wanted %v", got, want)
 	}
+
 }
 
 func ExampleSumAll() {
 	res := SumAll([]int{1, 2, 3}, []int{4, 5})
 	fmt.Printf("%#v", res)
 	// Output: []int{6, 9}
+
+}
+
+func TestSumAllTails(t *testing.T) {
+	checkSums := func(t testing.TB, got, want []int) {
+		t.Helper()
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %v, wanted %v", got, want)
+		}
+	}
+	t.Run("sums of some slices tail", func(t *testing.T) {
+		got := SumAllTails([]int{1, 2, 3}, []int{4, 5})
+		want := []int{5, 5}
+		checkSums(t, got, want)
+	})
+
+	t.Run("sums of empty slices tail", func(t *testing.T) {
+		got := SumAllTails([]int{}, []int{3, 4, 5})
+		want := []int{0, 9}
+		checkSums(t, got, want)
+	})
+}
+
+func ExampleSumAllTails() {
+	res := SumAllTails([]int{1, 2, 3}, []int{4, 5})
+	fmt.Printf("%#v", res)
+	// Output: []int{5, 5}
 
 }
