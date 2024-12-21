@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 )
 
 type greet string
@@ -12,34 +13,37 @@ const (
 	frenchGreetPrefix greet = "Bonjour"
 )
 
-type lang string
+// empty values will be replaced with defaults
+type Parameters struct {
+	name string `default:"World"`
+	l    string `default:"english"`
+}
 
-const (
-	english lang = "English"
-	hindi   lang = "Hindi"
-	french  lang = "French"
-)
-
-// separate 'domain' code
-
-func Hello(name string, l lang) string {
-
-	if name == "" {
-		name = "World"
+func Hello(prm Parameters) string {
+	typ := reflect.TypeOf(prm)
+	if prm.name == "" {
+		f, _ := typ.FieldByName("name")
+		prm.name = f.Tag.Get("default")
 	}
+	if prm.l == "" {
+		f, _ := typ.FieldByName("l")
+		prm.l = f.Tag.Get("default")
+	}
+
 	var prefix greet
 
-	switch l {
-	case hindi:
+	switch prm.l {
+	case "hindi":
 		prefix = hindiGreetPrefix
-	case french:
+	case "french":
 		prefix = frenchGreetPrefix
 	default:
 		prefix = engGreetPrefix
 	}
-	return fmt.Sprintf("%s, %s", prefix, name)
+	return fmt.Sprintf("%s, %s", prefix, prm.name)
 }
 
 func main() {
-	fmt.Println(Hello("world", ""))
+	param := Parameters{"", ""}
+	fmt.Println(Hello(param))
 }
