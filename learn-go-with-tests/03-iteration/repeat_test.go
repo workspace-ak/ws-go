@@ -16,6 +16,12 @@ func TestRepeat(t *testing.T) {
 
 func ExampleRepeat() {
 	repeated := Repeat("a")
-	fmt.Println(repeated)
-	// Output: "aaaaa"
+	fmt.Printf("%s", repeated)
+	// Output: aaaaa
+}
+
+func BenchmarkRepeat(b *testing.B) {
+	for i := 0; i < 5; i++ {
+		Repeat("a")
+	}
 }
