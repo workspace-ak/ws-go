@@ -3,9 +3,30 @@ package main
 import "testing"
 
 func TestHello(t *testing.T) {
-	got := Hello("Chris")
-	want := "Hello, Chris"
+	t.Run("Saying hello to people", func(t *testing.T) {
+		got := Hello("Chris", "")
+		want := "Hello, Chris"
+		assertCorrectMessage(t, got, want)
+	})
+	t.Run("When empty string, say Hello, World!", func(t *testing.T) {
+		got := Hello("", "")
+		want := "Hello, World"
+		assertCorrectMessage(t, got, want)
+	})
+	t.Run("in Hindi", func(t *testing.T) {
+		got := Hello("Chris", hindi)
+		want := "Namaskar, Chris"
+		assertCorrectMessage(t, got, want)
+	})
+	t.Run("in French", func(t *testing.T) {
+		got := Hello("Chris", french)
+		want := "Bonjour, Chris"
+		assertCorrectMessage(t, got, want)
+	})
+}
 
+func assertCorrectMessage(t testing.TB, got, want string) {
+	t.Helper()
 	if got != want {
 		t.Errorf("got %q want %q", got, want)
 	}
