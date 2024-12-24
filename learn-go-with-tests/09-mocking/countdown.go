@@ -1,3 +1,4 @@
+// Explains usage of mocks and spies in unittesting
 package mock
 
 import (
