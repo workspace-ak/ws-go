@@ -12,20 +12,16 @@ type Sleeper interface {
 	Sleep()
 }
 
-type SpySleeper struct {
-	Calls int
+type ConfigurableSleeper struct {
+	duration time.Duration
+	sleep    func(time.Duration)
 }
 
-func (s *SpySleeper) Sleep() {
-	s.Calls++
+func (c *ConfigurableSleeper) Sleep() {
+	c.sleep(c.duration)
 }
 
-type DefaultSleeper struct{}
-
-func (d *DefaultSleeper) Sleep() {
-	time.Sleep(1 * time.Second)
-}
-
+// Countdown from n with 1 second interval
 func Countdown(out io.Writer, n int, s Sleeper) {
 	for i := n; i > 0; i-- {
 		fmt.Fprintln(out, i)
